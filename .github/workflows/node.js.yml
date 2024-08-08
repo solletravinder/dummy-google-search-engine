@@ -1,27 +1,24 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Build and Deploy
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main  # Replace with your main branch if different
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js (if using Node.js environment)
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18.x" # Specify the Node.js version
+          node-version: '18.x'  # Specify the Node.js version
 
       # Install dependencies
       - name: Install dependencies
@@ -33,9 +30,9 @@ jobs:
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.2.0
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages  # The branch where the built files will be deployed
-          folder: dist       # The folder containing the built files
+          publish_branch: gh-pages  # The branch where the built files will be deployed
+          publish_dir: ./dist       # The folder containing the built files
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure this token has write permissions
