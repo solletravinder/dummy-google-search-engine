@@ -22,4 +22,5 @@ export default defineConfig({
     // Optionally configure output directory
     outDir: 'dist',
   },
+  base: '/dummy-google-search-engine/',  // Base URL for deployment
 });
