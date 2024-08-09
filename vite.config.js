@@ -11,15 +11,13 @@ export default defineConfig({
         // Naming code-split chunks
         chunkFileNames: 'chunks/[name].js',
         // Naming the main CSS file
-        assetFileNames: ({ name }) => {
-          if (/\.css$/.test(name ?? '')) {
-            return 'main.css';
-          }
-          return 'assets/[name].[ext]'; // For other assets
+        assetFileNames: ({ name, ext }) => {
+          return '[name].[ext]'; // Default placement for other assets
         },
       },
     },
     // Optionally configure output directory
     outDir: 'dist',
   },
+  base: '/dummy-google-search-engine/'
 });
