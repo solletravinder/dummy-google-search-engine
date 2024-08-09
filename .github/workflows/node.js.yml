@@ -3,11 +3,12 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master  # Or the branch you want to deploy from
+      - master  # Your development branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -15,17 +16,20 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18.x'  # Match this with your local Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build
+        run: npm run build  # Ensure this generates the dist directory
+
+      - name: List build directory contents
+        run: ls -R ./dist  # Debug step to check contents
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./dist
+          publish_dir: /home/runner/work/dummy-google-search-engine/dist  # Ensure this matches your build output directory
