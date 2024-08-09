@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master  # Set to master branch
+      - master  # Your development branch
 
 jobs:
   deploy:
@@ -16,23 +16,27 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'  # Set to Node.js version 18
+          node-version: '18.x'  # Match this with your local Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build  # Ensure this is your correct build command
+        run: npm run build  # Ensure this generates the dist directory
 
+      - name: List build directory contents
+        run: ls -R ./dist  # Debug step to check contents
+
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@4.2.0
         with:
+          branch: gh-pages  # The branch where the built files will be deployed
+          folder: ./dist       # The folder containing the built files
+        env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages  # This is the branch GitHub Pages will use
-          publish_dir: ./dist  # Adjust to your build output directory
 
       - name: Save state
         run: echo "{name}={value}" >> $GITHUB_STATE
-      
       - name: Set output
         run: echo "{name}={value}" >> $GITHUB_OUTPUT
