@@ -32,4 +32,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: /home/runner/work/dummy-google-search-engine/  # Ensure this matches your build output directory
+          publish_dir: /home/runner/work/dummy-google-search-engine/dummy-google-search-engine  # Ensure this matches your build output directory
