@@ -16,20 +16,23 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Node.js version should be 18
+          node-version: '18.x'  # Ensure this matches your local Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build  # Ensure this is your correct build command
+        run: npm run build  # Ensure this generates the dist directory
+
+      - name: List build directory contents
+        run: ls -R ./dist  # Debug step to check contents
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages  # This is the branch GitHub Pages will use
-          publish_dir: ./dist  # Adjust to your build output directory
+          publish_branch: gh-pages
+          publish_dir: ./dist  # Ensure this matches your build output directory
 
       - name: Save state
         run: echo "{name}={value}" >> $GITHUB_STATE
