@@ -27,9 +27,11 @@ jobs:
       - name: List build directory contents
         run: ls -R ./dist  # Debug step to check contents
 
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@4.2.0
         with:
+          branch: gh-pages  # The branch where the built files will be deployed
+          folder: dist       # The folder containing the built files
+        env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: /home/runner/work/dummy-google-search-engine/dummy-google-search-engine/dist  # Ensure this matches your build output directory
