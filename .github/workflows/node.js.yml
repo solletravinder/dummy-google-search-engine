@@ -3,36 +3,31 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Replace with your main branch if different
+      - master  # Set to master branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Specify the Node.js version
+          node-version: '18'  # Set to Node.js version 18
 
-      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build the project
       - name: Build project
-        run: npm run build  # Adjust this command based on your build setup
+        run: npm run build  # Ensure this is your correct build command
 
-      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          publish_branch: gh-pages  # The branch where the built files will be deployed
-          publish_dir: ./dist       # The folder containing the built files
+          publish_branch: gh-pages  # This is the branch GitHub Pages will use
+          publish_dir: ./dist  # Adjust to your build output directory
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure this token has write permissions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
