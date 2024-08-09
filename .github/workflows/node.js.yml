@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build  # Ensure this generates the dist directory
+        run: npm run build --configuration=production  # Ensure this generates the dist directory
 
       - name: List build directory contents
         run: ls -R ./dist  # Debug step to check contents
@@ -31,8 +31,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist  # Ensure this matches your build output directory
+          publish_dir: ./dist/
 
       - name: Save state
         run: echo "{name}={value}" >> $GITHUB_STATE
