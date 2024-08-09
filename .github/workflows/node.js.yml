@@ -3,12 +3,11 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master  # Your development branch
+      - master  # Or the branch you want to deploy from
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,25 +15,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'  # Ensure this matches your local Node.js version
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build --configuration=production  # Ensure this generates the dist directory
-
-      - name: List build directory contents
-        run: ls -R ./dist  # Debug step to check contents
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/
-
-      - name: Save state
-        run: echo "{name}={value}" >> $GITHUB_STATE
-      
-      - name: Set output
-        run: echo "{name}={value}" >> $GITHUB_OUTPUT
+          deploy_key: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
