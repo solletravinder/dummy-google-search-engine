@@ -29,8 +29,8 @@ jobs:
         with:
           publish_branch: gh-pages  # This is the branch GitHub Pages will use
           publish_dir: ./dist  # Adjust to your build output directory
-        env:
           github_token: ${{ secrets.TOKEN }}
+
       - name: Save state
         run: echo "{name}={value}" >> $GITHUB_STATE
       
